@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>记录新足迹 - 旅迹博客</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        :root { --primary: #10b981; }
+        body { padding-top: 2rem; background-color: #f8f9fa; }
+        article { max-width: 800px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .upload-section { 
+            border: 2px dashed #ccc; 
+            padding: 20px; 
+            border-radius: 10px; 
+            text-align: center; 
+            margin-bottom: 1.5rem; 
+            transition: border-color 0.3s;
+        }
+        .upload-section:hover { border-color: var(--primary); }
+        label { font-weight: bold; margin-top: 1rem; display: block; }
+        small { color: #666; }
+    </style>
+</head>
+<body class="container">
+    <article>
+        <header>
+            <h2 style="margin:0;">🌍 开启一段新旅程</h2>
+            <p>填入你的足迹，让地图连线全世界</p>
+        </header>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label>旅途标题</label>
+            {{ form.title }}
+            
+            <label>旅行感悟</label>
+            {{ form.content }}
+            
+            <label>所在城市/地点名称</label>
+            {{ form.location }}
+
+            <div class="upload-section">
+                 <label>📸 上传精彩瞬间 (图片或视频)</label>
+                 <input type="file" name="files" multiple>
+                 <br><small>支持同时选择多个文件上传</small>
+            </div>
+            
+            <div class="grid">
+                <div>
+                    <label>纬度 (Lat)</label>
+                    {{ form.lat }}
+                    <small>卡帕多奇亚建议：38.6</small>
+                </div>
+                <div>
+                    <label>经度 (Lon)</label>
+                    {{ form.lon }}
+                    <small>卡帕多奇亚建议：34.8</small>
+                </div>
+            </div>
+            
+            <footer style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                <a href="/" class="secondary" role="button">取消并返回</a>
+                <button type="submit" style="background-color: var(--primary); border:none;">立即发布足迹</button>
+            </footer>
+        </form>
+    </article>
+</body>
+</html>

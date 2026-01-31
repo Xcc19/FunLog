@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>记录新瞬间 | TravelLog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        :root { --primary: #f59e0b; --bg: #fff9f2; }
+        body { background-color: var(--bg); font-family: 'PingFang SC', sans-serif; padding-top: 2rem; }
+        
+        .form-card { 
+            background: white; padding: 2.5rem; border-radius: 30px; 
+            border: 4px solid #fef3c7; box-shadow: 0 15px 0px #fef3c7;
+            max-width: 650px; margin: 0 auto;
+        }
+        
+        h2 { color: #d97706; text-align: center; margin-bottom: 2rem; font-size: 2rem; }
+        
+        /* 表单控件卡通化 */
+        input, textarea, select { 
+            border-radius: 15px !important; 
+            border: 2px solid #fef3c7 !important; 
+            background: #fffcf8 !important;
+        }
+        input:focus { border-color: #f59e0b !important; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important; }
+        
+        button { 
+            background: #f59e0b; border: none; font-weight: bold; 
+            padding: 1rem; border-radius: 18px; font-size: 1.1rem;
+            box-shadow: 0 5px 0 #d97706; transition: 0.1s;
+        }
+        button:active { transform: translateY(3px); box-shadow: 0 2px 0 #d97706; }
+        
+        .hint { font-size: 0.8rem; color: #94a3b8; margin-top: -10px; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body class="container">
+    <div class="form-card">
+        <h2>🎨 描绘你的新足迹</h2>
+        
+        <form method="POST" enctype="multipart/form-data" action="{% url 'create_post' %}">
+            {% csrf_token %}
+            
+            <div class="grid">
+                <div>
+                    <label>给故事起个名</label>
+                    {{ form.title }}
+                </div>
+                <div>
+                    <label>在哪儿？(如: 上海)</label>
+                    {{ form.location }}
+                </div>
+            </div>
+
+            <label>此刻的心情</label>
+            {{ form.mood }}
+            <span class="hint">例如：浪漫, 繁华, 很多pasta (后台会自动抓取这些词哦)</span>
+
+            <div class="grid">
+                <div><label>东经 (Lon)</label>{{ form.lon }}</div>
+                <div><label>北纬 (Lat)</label>{{ form.lat }}</div>
+            </div>
+            <span class="hint">小技巧：在地图上右键点击地点即可获取经纬度</span>
+
+            <label>写下游记内容</label>
+            {{ form.content }}
+
+            <label>上传精彩瞬间 (图片/视频)</label>
+            <input type="file" name="files" multiple accept="image/*,video/*" style="padding: 10px;">
+
+            <button type="submit">🚀 把我的记忆投射到地图</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="/" style="color: #f59e0b; text-decoration: none; font-weight: 600;">← 不记了，回首页</a>
+        </div>
+    </div>
+</body>
+</html>
